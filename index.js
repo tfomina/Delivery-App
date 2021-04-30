@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use("/api", userApiRouter, advertisementApiRouter);
+app.use("*", (req, res) => res.status(404).send({ error: "Страница не найдена" }));
 
 const PORT = process.env.PORT || 3000;
 const UserDB = process.env.DB_USERNAME || "root";
