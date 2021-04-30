@@ -22,6 +22,7 @@ module.exports = {
           passwordHash,
           contactPhone,
         });
+
         res.send({
           data: {
             id: user.id,
@@ -45,11 +46,13 @@ module.exports = {
   // аутентификация
   async signin(req, res, next) {
     const { email, password } = req.body;
+
     try {
       const user = await UserModule.findByEmail(email);
 
       if (user) {
         const areSame = await bcrypt.compare(password, user.passwordHash);
+
         if (areSame) {
           res.send({
             data: {
@@ -66,6 +69,11 @@ module.exports = {
             status: "error",
           });
         }
+      } else {
+        res.send({
+          error: "Пользователь не найден",
+          status: "error",
+        });
       }
     } catch (err) {
       console.log(err);
