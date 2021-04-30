@@ -1,4 +1,4 @@
-const Advertisement = require("../models");
+const { Advertisement } = require("../models");
 
 module.exports = {
   create(data) {
