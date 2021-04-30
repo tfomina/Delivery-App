@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const mongoose = require("mongoose");
 
 const userApiRouter = require("./src/routes/user");
@@ -11,6 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
+
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use("/api", userApiRouter, advertisementApiRouter);
 
