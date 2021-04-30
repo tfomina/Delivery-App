@@ -8,10 +8,10 @@ const advertisementApiRouter = require("./src/routes/advertisement");
 
 const app = express();
 
+app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(cors());
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
