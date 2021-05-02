@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const userApiRouter = require("./src/routes/user");
 const advertisementApiRouter = require("./src/routes/advertisement");
 
+const notFoundMiddleware = require("./src/middleware/notFound");
+
 const app = express();
 
 app.use(cors());
@@ -16,13 +18,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use("/api", userApiRouter, advertisementApiRouter);
-app.use("*", (req, res) => res.status(404).send({ error: "Страница не найдена" }));
+
+app.use(notFoundMiddleware);
 
 const PORT = process.env.PORT || 3000;
 const UserDB = process.env.DB_USERNAME || "root";
 const PasswordDB = process.env.DB_PASSWORD || "AXRHV]cy?s/4UkZ";
 const NameDB = process.env.DB_NAME || "delivery_db";
-const HostDB = process.env.DB_HOST || "mongodb://localhost:27017/";
 const start = async () => {
   try {
     const UrlDB = `mongodb+srv://${UserDB}:${PasswordDB}@cluster0.m4q9c.mongodb.net/${NameDB}?retryWrites=true&w=majority`;
