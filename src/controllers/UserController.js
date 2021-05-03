@@ -37,7 +37,7 @@ module.exports = {
       console.log(err);
 
       res.send({
-        error: "ошибка",
+        error: "Ошибка",
         status: "error",
       });
     }
@@ -79,7 +79,7 @@ module.exports = {
       console.log(err);
 
       res.send({
-        error: "ошибка",
+        error: "Ошибка",
         status: "error",
       });
     }
