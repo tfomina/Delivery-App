@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const { requiredMessage } = require("../helper");
 
 const AdvertisementSchema = new Schema({
-  shortText: {
+  shortTitle: {
     type: String,
     required: [true, requiredMessage],
   },
