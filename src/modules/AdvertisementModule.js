@@ -1,6 +1,10 @@
 const { Advertisement } = require("../models");
 
 module.exports = {
+  getOne(id) {
+    return Advertisement.findById(id);
+  },
+
   create(data) {
     const advertisement = new Advertisement(data);
     return advertisement.save();
