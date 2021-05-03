@@ -12,7 +12,7 @@ module.exports = {
           data: {
             id: advertisement.id,
             shortTitle: advertisement.shortTitle,
-            advertisement: advertisement.decription,
+            description: advertisement.description,
             images: advertisement.images,
             user: {
               id: "", // TODO Доработать
