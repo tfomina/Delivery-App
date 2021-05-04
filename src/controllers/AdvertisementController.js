@@ -1,13 +1,16 @@
 const AdvertisementModule = require("../modules/AdvertisementModule");
+const UserModule = require("../modules/UserModule");
 
 module.exports = {
   // получить объявление по id
   async getOne(req, res, next) {
     const { id } = req.params;
     try {
-      const advertisement = await AdvertisementModule.getOne(id);
+      const advertisement = await AdvertisementModule.findById(id);
 
       if (advertisement) {
+        const user = await UserModule.findById(advertisement.userId);
+
         res.send({
           data: {
             id: advertisement.id,
@@ -15,8 +18,8 @@ module.exports = {
             description: advertisement.description,
             images: advertisement.images,
             user: {
-              id: "", // TODO Доработать
-              name: "", // TODO Доработать
+              id: user.id,
+              name: user.name,
             },
             createdAt: advertisement.createdAt,
           },

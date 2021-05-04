@@ -1,7 +1,7 @@
 const { Advertisement } = require("../models");
 
 module.exports = {
-  getOne(id) {
+  findById(id) {
     return Advertisement.findById(id);
   },
 
