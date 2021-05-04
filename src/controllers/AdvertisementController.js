@@ -45,7 +45,45 @@ module.exports = {
   async getAll(req, res, next) {},
 
   // создать объявление
-  async create(req, res, next) {},
+  async create(req, res, next) {
+    const { user } = req;
+
+    const { shortTitle, description, images, tags } = req.body;
+    const currentDate = new Date().toISOString();
+
+    try {
+      const advertisement = await AdvertisementModule.create({
+        shortTitle,
+        description,
+        images,
+        userId: user.id,
+        createdAt: currentDate,
+        updatedAt: currentDate,
+        tags,
+        isDeleted: false,
+      });
+
+      res.send({
+        data: {
+          id: advertisement.id,
+          shortTitle: advertisement.shortTitle,
+          description: advertisement.shortTitle,
+          images: advertisement.images,
+          user: {
+            id: user.userId,
+            name: user.name,
+          },
+          createdAt: advertisement.createdAt,
+        },
+        status: "ok",
+      });
+    } catch (err) {
+      res.send({
+        error: "Ошибка",
+        status: "error",
+      });
+    }
+  },
 
   // удалить объявление по id
   async delete(req, res, next) {
