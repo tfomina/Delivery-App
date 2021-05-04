@@ -3,7 +3,7 @@ const UserModule = require("../modules/UserModule");
 
 module.exports = {
   // получить объявление по id
-  async getOne(req, res, next) {
+  async getOne(req, res) {
     const { id } = req.params;
     try {
       const advertisement = await AdvertisementModule.findById(id);
@@ -48,5 +48,36 @@ module.exports = {
   async create(req, res, next) {},
 
   // удалить объявление по id
-  async delete(req, res, next) {},
+  async delete(req, res, next) {
+    const { user } = req;
+    const { id } = req.params;
+
+    try {
+      const advertisement = await AdvertisementModule.findById(id);
+
+      if (advertisement) {
+        const { userId } = advertisement;
+
+        if (userId !== user.id) {
+          res.status(403).send({
+            error: "Ошибка",
+            status: "error",
+          });
+        } else {
+          await AdvertisementModule.remove(id);
+
+          res.send({
+            status: "ok",
+          });
+        }
+      }
+    } catch (err) {
+      console.log(err);
+
+      res.send({
+        error: "Ошибка",
+        status: "error",
+      });
+    }
+  },
 };
