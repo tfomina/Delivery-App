@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const UserModule = require("../modules/UserModule");
+const passport = require("../passport/setup");
 
 module.exports = {
   // регистрация
@@ -45,43 +46,38 @@ module.exports = {
 
   // аутентификация
   async signin(req, res, next) {
-    const { email, password } = req.body;
+    passport.authenticate("local", (err, user, info) => {
+      if (err) {
+        return next(err);
+      }
 
-    try {
-      const user = await UserModule.findByEmail(email);
-
-      if (user) {
-        const areSame = await bcrypt.compare(password, user.passwordHash);
-
-        if (areSame) {
-          res.send({
-            data: {
-              id: user.id,
-              email: user.email,
-              name: user.name,
-              contactPhone: user.contactPhone,
-            },
-            status: "ok",
-          });
-        } else {
-          res.send({
-            error: "Неверный логин или пароль",
-            status: "error",
-          });
-        }
-      } else {
+      if (!user) {
         res.send({
-          error: "Пользователь не найден",
+          error: info,
           status: "error",
         });
       }
-    } catch (err) {
-      console.log(err);
 
-      res.send({
-        error: "Ошибка",
-        status: "error",
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        res.send({
+          data: {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            contactPhone: user.contactPhone,
+          },
+          status: "ok",
+        });
       });
-    }
+    })(req, res, next);
+  },
+
+  // выход
+  logout(req, res, next) {
+    req.logout();
+    res.redirect("/");
   },
 };
