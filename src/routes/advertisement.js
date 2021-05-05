@@ -1,24 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const AdvertisementController = require("../controllers/AdvertisementController");
-const isAuthenticatedMiddleware = require("../middleware/isAuthenticated");
+const { isAuthenticatedMiddleware } = require("../middleware");
 
 // получить объявление по id
-router.get("/advertisement/:id", AdvertisementController.getOne);
+router.get("/:id", AdvertisementController.getOne);
 
 // получить список объявлений
-router.get("/advertisement", AdvertisementController.getAll);
+router.get("/", AdvertisementController.getAll);
 
 // создать объявление
-router.post(
-  "/advertisement",
-  isAuthenticatedMiddleware,
-  AdvertisementController.create
-);
+router.post("/", isAuthenticatedMiddleware, AdvertisementController.create);
 
 // удалить объявление по id
 router.delete(
-  "/advertisement/:id",
+  "/:id",
   isAuthenticatedMiddleware,
   AdvertisementController.delete
 );

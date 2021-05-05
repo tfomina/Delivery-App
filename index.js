@@ -4,10 +4,9 @@ const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 
-const userApiRouter = require("./src/routes/user");
-const advertisementApiRouter = require("./src/routes/advertisement");
+const { userApiRouter, advertisementApiRouter } = require("./src/routes");
 
-const notFoundMiddleware = require("./src/middleware/notFound");
+const { notFoundMiddleware } = require("./src/middleware");
 const passport = require("./src/passport/setup");
 
 const app = express();
@@ -30,7 +29,8 @@ app.use(passport.session());
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-app.use("/api", userApiRouter, advertisementApiRouter);
+app.use("/user", userApiRouter);
+app.use("/advertisement", advertisementApiRouter);
 
 app.use(notFoundMiddleware);
 
