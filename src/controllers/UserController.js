@@ -45,7 +45,7 @@ module.exports = {
   },
 
   // аутентификация
-  async signin(req, res, next) {
+  signin(req, res, next) {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
         return next(err);

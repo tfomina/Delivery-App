@@ -29,7 +29,7 @@ const verify = async (email, password, done) => {
       return done(null, false, "Пользователь не найден");
     }
   } catch (err) {
-    return done(err, false);
+    return done(err);
   }
 };
 
