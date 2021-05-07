@@ -104,13 +104,17 @@ module.exports = {
       if (advertisement) {
         const { userId } = advertisement;
 
-        if (userId !== user.id) {
+        if (userId.toString() !== user.id) {
           res.status(403).send({
             error: "Ошибка",
             status: "error",
           });
         } else {
           await AdvertisementModule.remove(id);
+
+          // удаляем изображения
+          const { images } = advertisement;
+          images.forEach((image) => deleteFileFromDisk(image));
 
           res.send({
             status: "ok",
