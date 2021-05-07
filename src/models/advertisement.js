@@ -9,7 +9,7 @@ const AdvertisementSchema = new Schema({
   },
   description: String,
   images: [String],
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: [true, requiredMessage],

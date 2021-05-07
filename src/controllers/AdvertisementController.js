@@ -1,5 +1,4 @@
 const AdvertisementModule = require("../modules/AdvertisementModule");
-const UserModule = require("../modules/UserModule");
 const { deleteFileFromDisk } = require("../helper");
 
 module.exports = {
@@ -7,23 +6,11 @@ module.exports = {
   async getOne(req, res) {
     const { id } = req.params;
     try {
-      const advertisement = await AdvertisementModule.findById(id);
+      const advertisement = await AdvertisementModule.getOne(id);
 
       if (advertisement) {
-        const user = await UserModule.findById(advertisement.userId);
-
         res.send({
-          data: {
-            id: advertisement.id,
-            shortTitle: advertisement.shortTitle,
-            description: advertisement.description,
-            images: advertisement.images,
-            user: {
-              id: user.id,
-              name: user.name,
-            },
-            createdAt: advertisement.createdAt,
-          },
+          data: advertisement,
           status: "ok",
         });
       } else {
@@ -70,7 +57,7 @@ module.exports = {
 
   // создать объявление
   async create(req, res, next) {
-    const { user } = req;
+    const { user: currentUser } = req;
 
     const { shortTitle, description, tags } = req.body;
     const currentDate = new Date().toISOString();
@@ -82,7 +69,7 @@ module.exports = {
         shortTitle,
         description,
         images,
-        userId: user.id,
+        user: currentUser.id,
         createdAt: currentDate,
         updatedAt: currentDate,
         tags,
@@ -96,8 +83,8 @@ module.exports = {
           description: advertisement.shortTitle,
           images: advertisement.images,
           user: {
-            id: user.userId,
-            name: user.name,
+            id: currentUser.id,
+            name: currentUser.name,
           },
           createdAt: advertisement.createdAt,
         },
@@ -118,26 +105,22 @@ module.exports = {
 
   // удалить объявление по id
   async delete(req, res, next) {
-    const { user } = req;
+    const { user: currentUser } = req;
     const { id } = req.params;
 
     try {
       const advertisement = await AdvertisementModule.findById(id);
 
       if (advertisement) {
-        const { userId } = advertisement;
+        const { user } = advertisement;
 
-        if (userId.toString() !== user.id) {
+        if (user.toString() !== currentUser.id) {
           res.status(403).send({
             error: "Ошибка",
             status: "error",
           });
         } else {
           await AdvertisementModule.remove(id);
-
-          // удаляем изображения
-          const { images } = advertisement;
-          images.forEach((image) => deleteFileFromDisk(image));
 
           res.send({
             status: "ok",

@@ -1,8 +1,10 @@
 const { Advertisement } = require("../models");
 
 module.exports = {
-  findById(id) {
-    return Advertisement.findById(id);
+  getOne(id) {
+    return Advertisement.findById(id)
+      .select("shortTitle description images createdAt")
+      .populate("user", { _id: 1, name: 1 });
   },
 
   create(data) {
@@ -11,7 +13,12 @@ module.exports = {
   },
 
   find(params) {
-    return Advertisement.find(buildFilterQuery(params));
+    return Advertisement.find(buildFilterQuery(params))
+      .select("shortTitle description images createdAt")
+      .populate("user", {
+        _id: 1,
+        name: 1,
+      });
   },
 
   remove(id) {
@@ -35,7 +42,7 @@ const buildFilterQuery = (params) => {
   }
 
   if (userId) {
-    query.userId = userId;
+    query.user = userId;
   }
 
   if (tags) {
