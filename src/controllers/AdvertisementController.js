@@ -43,7 +43,30 @@ module.exports = {
   },
 
   // получить список объявлений
-  async getAll(req, res, next) {},
+  async getAll(req, res, next) {
+    const { shortTitle, description, userId, tags } = req.query;
+
+    try {
+      const advertisements = await AdvertisementModule.find({
+        shortTitle,
+        description,
+        userId,
+        tags,
+      });
+
+      res.send({
+        data: advertisements,
+        status: "ok",
+      });
+    } catch (err) {
+      console.log(err);
+
+      res.send({
+        error: "Ошибка",
+        status: "error",
+      });
+    }
+  },
 
   // создать объявление
   async create(req, res, next) {

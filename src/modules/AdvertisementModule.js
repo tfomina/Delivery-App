@@ -22,14 +22,16 @@ module.exports = {
 };
 
 const buildFilterQuery = (params) => {
-  const { shortText, description, userId, tags } = params;
+  const { shortTitle, description, userId, tags } = params;
 
   const query = {};
 
-  if (shortText) {
+  if (shortTitle) {
+    query.shortTitle = { $regex: new RegExp(shortTitle), $options: "i" };
   }
 
   if (description) {
+    query.description = { $regex: new RegExp(description), $options: "i" };
   }
 
   if (userId) {
@@ -37,6 +39,7 @@ const buildFilterQuery = (params) => {
   }
 
   if (tags) {
+    query.tags = { $all: tags };
   }
 
   query.isDeleted = false;
