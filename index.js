@@ -28,7 +28,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/user", userApiRouter);
 app.use("/advertisement", advertisementApiRouter);

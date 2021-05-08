@@ -80,7 +80,7 @@ module.exports = {
         data: {
           id: advertisement.id,
           shortTitle: advertisement.shortTitle,
-          description: advertisement.shortTitle,
+          description: advertisement.description,
           images: advertisement.images,
           user: {
             id: currentUser.id,
@@ -109,12 +109,12 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const advertisement = await AdvertisementModule.findById(id);
+      const advertisement = await AdvertisementModule.getOne(id);
 
       if (advertisement) {
         const { user } = advertisement;
 
-        if (user.toString() !== currentUser.id) {
+        if (user.id !== currentUser.id) {
           res.status(403).send({
             error: "Ошибка",
             status: "error",

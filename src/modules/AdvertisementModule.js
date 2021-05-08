@@ -46,7 +46,7 @@ const buildFilterQuery = (params) => {
   }
 
   if (tags) {
-    query.tags = { $all: tags };
+    query.tags = { $all: tags.split(",") };
   }
 
   query.isDeleted = false;
