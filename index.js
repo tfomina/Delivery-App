@@ -12,8 +12,6 @@ const passport = require("./src/passport/setup");
 
 const app = express();
 
-app.use(cors());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,6 +25,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(cors());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
