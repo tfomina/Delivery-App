@@ -7,6 +7,7 @@ const storage = multer.diskStorage({
   destination(req, file, cb) {
     const { user } = req;
 
+    // создаем свою папку для хранения изображений каждого пользователя
     const folderPath = path.join("uploads", user.id);
 
     if (!fs.existsSync(folderPath)) {
