@@ -8,8 +8,7 @@ module.exports = {
   },
 
   create(data) {
-    const advertisement = new Advertisement(data);
-    return advertisement.save();
+    return Advertisement.create(data);
   },
 
   find(params) {
