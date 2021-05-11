@@ -5,10 +5,10 @@ const { nanoid } = require("nanoid");
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    const { user } = req;
+    const { user: currentUser } = req;
 
     // создаем свою папку для хранения изображений каждого пользователя
-    const folderPath = path.join("uploads", user.id);
+    const folderPath = path.join("uploads", currentUser.id);
 
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath, { recursive: true });
