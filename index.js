@@ -46,6 +46,7 @@ const start = async () => {
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
 
     app.listen(PORT, () => {
