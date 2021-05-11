@@ -10,7 +10,10 @@ const MessageSchema = new Schema({
   },
   sentAt: { type: Date, required: [true, requiredMessage] },
   text: { type: String, required: [true, requiredMessage] },
-  readAt: Date,
+  readAt: {
+    type: Date,
+    default: null,
+  },
 });
 
 module.exports = MessageSchema;
