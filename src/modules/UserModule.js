@@ -2,8 +2,7 @@ const { User } = require("../models");
 
 module.exports = {
   create(data) {
-    const user = new User(data);
-    return user.save();
+    return User.create(data);
   },
 
   findByEmail(email) {
