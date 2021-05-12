@@ -115,7 +115,7 @@ module.exports = {
         const { user } = advertisement;
 
         if (user.id !== currentUser.id) {
-          res.status(403).send({
+          res.status(403).json({
             error: "Ошибка",
             status: "error",
           });
