@@ -78,6 +78,8 @@ module.exports = {
   // выход
   logout(req, res, next) {
     req.logout();
-    res.redirect("/");
+    res.json({
+      status: "ok",
+    });
   },
 };
