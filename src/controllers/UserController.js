@@ -62,7 +62,7 @@ module.exports = {
         if (err) {
           return next(err);
         }
-        res.send({
+        res.json({
           data: {
             id: user.id,
             email: user.email,
