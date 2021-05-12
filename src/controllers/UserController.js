@@ -11,7 +11,7 @@ module.exports = {
       const candidate = await UserModule.findByEmail(email);
 
       if (candidate) {
-        res.send({
+        res.json({
           error: "Email занят",
           status: "error",
         });
@@ -24,7 +24,7 @@ module.exports = {
           contactPhone,
         });
 
-        res.send({
+        res.json({
           data: {
             id: user.id,
             email: user.email,
@@ -37,7 +37,7 @@ module.exports = {
     } catch (err) {
       console.log(err);
 
-      res.send({
+      res.json({
         error: "Ошибка",
         status: "error",
       });
@@ -52,7 +52,7 @@ module.exports = {
       }
 
       if (!user) {
-        res.send({
+        res.json({
           error: info,
           status: "error",
         });

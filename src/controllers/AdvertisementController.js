@@ -9,12 +9,12 @@ module.exports = {
       const advertisement = await AdvertisementModule.getOne(id);
 
       if (advertisement) {
-        res.send({
+        res.json({
           data: advertisement,
           status: "ok",
         });
       } else {
-        res.send({
+        res.json({
           error: "Объявление не найдено",
           status: "error",
         });
@@ -22,7 +22,7 @@ module.exports = {
     } catch (err) {
       console.log(err);
 
-      res.send({
+      res.json({
         error: "Ошибка",
         status: "error",
       });
@@ -41,14 +41,14 @@ module.exports = {
         tags,
       });
 
-      res.send({
+      res.json({
         data: advertisements,
         status: "ok",
       });
     } catch (err) {
       console.log(err);
 
-      res.send({
+      res.json({
         error: "Ошибка",
         status: "error",
       });
@@ -76,7 +76,7 @@ module.exports = {
         isDeleted: false,
       });
 
-      res.send({
+      res.json({
         data: {
           id: advertisement.id,
           shortTitle: advertisement.shortTitle,
@@ -96,7 +96,7 @@ module.exports = {
       // если при создании объявления что-то пошло не так, удаляем все сохраненные изображения
       images.forEach((image) => deleteFileFromDisk(image));
 
-      res.send({
+      res.json({
         error: "Ошибка",
         status: "error",
       });
@@ -122,7 +122,7 @@ module.exports = {
         } else {
           await AdvertisementModule.remove(id);
 
-          res.send({
+          res.json({
             status: "ok",
           });
         }
@@ -130,7 +130,7 @@ module.exports = {
     } catch (err) {
       console.log(err);
 
-      res.send({
+      res.json({
         error: "Ошибка",
         status: "error",
       });
