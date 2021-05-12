@@ -4,6 +4,8 @@ const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const http = require("http");
+const socketIO = require("socket.io");
 
 const { userApiRouter, advertisementApiRouter } = require("./src/routes");
 
@@ -11,6 +13,17 @@ const { notFoundMiddleware } = require("./src/middleware");
 const passport = require("./src/passport/setup");
 
 const app = express();
+const server = http.Server(app);
+const io = socketIO(server);
+
+io.on("connection", (socket) => {
+  const { id } = socket;
+  console.log(`Socket connected: ${id}`);
+
+  socket.on("disconnect", () => {
+    console.log(`Socket disconnected: ${id}`);
+  });
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -49,7 +62,7 @@ const start = async () => {
       useFindAndModify: false,
     });
 
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (e) {
