@@ -60,6 +60,9 @@ module.exports = {
 
       req.logIn(user, (err) => {
         if (err) {
+          res.json({
+            status: "error",
+          });
           return next(err);
         }
         res.json({
