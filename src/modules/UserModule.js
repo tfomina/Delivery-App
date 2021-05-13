@@ -2,15 +2,14 @@ const { User } = require("../models");
 
 module.exports = {
   create(data) {
-    const user = new User(data);
-    return user.save();
+    return User.create(data);
   },
 
   findByEmail(email) {
     return User.findOne({ email });
   },
 
-  findById(id) {
-    return User.findById(id);
+  findById(id, cb) {
+    return User.findById(id, cb);
   },
 };
