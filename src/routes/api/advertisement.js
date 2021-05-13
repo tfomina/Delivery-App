@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const AdvertisementController = require("../controllers/AdvertisementController");
+const AdvertisementController = require("../../controllers/AdvertisementController");
 const {
   isAuthenticatedMiddleware,
   saveImagesMiddleware,
-} = require("../middleware");
+} = require("../../middleware");
 
 // получить объявление по id
 router.get("/:id", AdvertisementController.getOne);
