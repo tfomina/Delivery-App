@@ -60,7 +60,6 @@ module.exports = {
     const { user: currentUser } = req;
 
     const { shortTitle, description, tags } = req.body;
-    const currentDate = new Date().toISOString();
 
     const images = req.files.map((file) => file.path) || [];
 
@@ -70,8 +69,6 @@ module.exports = {
         description,
         images,
         user: currentUser.id,
-        createdAt: currentDate,
-        updatedAt: currentDate,
         tags,
         isDeleted: false,
       });

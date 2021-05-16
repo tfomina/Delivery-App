@@ -43,8 +43,8 @@ app.use(cors());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use("api/user", userApiRouter);
-app.use("api/advertisement", advertisementApiRouter);
+app.use("/api/user", userApiRouter);
+app.use("/api/advertisement", advertisementApiRouter);
 
 app.use(notFoundMiddleware);
 
